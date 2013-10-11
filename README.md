@@ -1,6 +1,6 @@
 # MediaMetaHash
 
-TODO: Write a gem description
+TODO: Given the url to a video (youtube, vimeo, foxnews, foxbusiness), this return a hash for opengraph (og) and twitter cards which can be used with meta-tags gem to create the html tags
 
 ## Installation
 
@@ -27,3 +27,6 @@ TODO: Write usage instructions here
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+
+

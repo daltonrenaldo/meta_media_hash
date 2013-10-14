@@ -7,10 +7,10 @@ Gem::Specification.new do |spec|
   spec.name          = "media_meta_hash"
   spec.version       = MediaMetaHash::VERSION
   spec.authors       = ["Renaldo Pierre-Louis"]
-  spec.email         = ["rpierrelouis@hedgeye.com"]
+  spec.email         = ["pirelouisd87@gmail.com"]
   spec.description   = %q{Given the url to a video (youtube, vimeo, foxnews, foxbusiness), this return a hash for opengraph (og) and twitter cards which can be used with meta-tags gem to create the html tags}
   spec.summary       = %q{This gem takes video url (youtube, vimeo, foxnews, foxbusiness) and returns a hash for og and twitter card}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/daltonrenaldo/meta_media_hash"
   spec.license       = "MIT"
 
   spec.add_dependency('video_info')

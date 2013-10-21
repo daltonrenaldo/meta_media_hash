@@ -24,10 +24,22 @@ module MediaMetaHash
         :width => 480,
         :height => (480 * 0.5625).to_i
       )
+    elsif url =~ /video\.cnbc\.com/ && url =~ /video=(\d*)/
+      id = $1
+      OpenStruct.new(
+        :video_id => id,
+        :embed_url => "http://video.cnbc.com/gallery/?video=#{id}",
+        :title => "",
+        :image => "",
+        :description => "",
+        :provider => "cnbc",
+        :width => 480,
+        :height => (480 * 0.5625).to_i
+      )
     else
       info = VideoInfo.get(url)
 
-      if url =~ /(youtube.com|youtu.be)/
+      if url =~ /(youtube.com|youtu.be)/ && info
         class << info
           def og_url=(val)
             @url = val
@@ -47,24 +59,30 @@ module MediaMetaHash
 
   def self.video_hash url, opts
     video = self.video_info(url)
-    common = { :title => video.title,
-               :description => video.description,
-               :image => video.thumbnail_medium
-             }
 
-    { :og => { :video => [video.og_url || video.embed_url, 
-                      {:height => video.height,
-                        :width => video.width }],
-               :type => "video"
-              }.merge!(common).merge!(opts),
+    if video
+      common = { :title => video.title,
+                 :description => video.description,
+                 :image => video.thumbnail_medium
+               }
 
-      :twitter => { :player => [video.embed_url.sub("http://", "https://"),
-                                { :width => video.width,
-                                  :height => video.height
-                                }],
-                    :card => "player"
-                  }.merge!(common).merge!(self.twitter_mobile(video.provider.downcase.to_sym, video.video_id)).merge!(opts)
-    }
+      { :og => { :video => [video.og_url || video.embed_url, 
+                        {:height => video.height,
+                          :width => video.width }],
+                 :type => "video"
+                }.merge!(common).merge!(opts),
+
+        :twitter => { :player => [video.embed_url.sub("http://", "https://"),
+                                  { :width => video.width,
+                                    :height => video.height
+                                  }],
+                      :card => "player"
+                    }.merge!(common).merge!(self.twitter_mobile(video.provider.downcase.to_sym, video.video_id)).merge!(opts)
+      }
+    else 
+      {}.merge!(opts)
+    end
+
   end
 
   def self.article_hash url, opts

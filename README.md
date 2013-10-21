@@ -29,4 +29,10 @@ TODO: Write usage instructions here
 5. Create new Pull Request
 
 
+## Change Log
+#### Version 0.0.2
+1. Returns given ```opts``` or ```{}``` if url is not supported
+2. Partial support for CNBC (no description, no title) 
+
+
 

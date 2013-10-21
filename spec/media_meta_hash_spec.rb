@@ -5,6 +5,7 @@ describe MediaMetaHash do
   YOUTUBE_URL = "http://www.youtube.com/watch?v=ZQCINxTQlN4"
   FOX_URL = "http://video.foxbusiness.com/v/2734961183001/a-breach-of-privacy-between-the-irs-and-white-house/"
   VIMEO_URL = "http://vimeo.com/74868773"
+  CNBC_URL = "http://video.cnbc.com/gallery/?play=1&video=3000146612"
 
   def basic_info opts = {}
     OpenStruct.new({:title => "Boats", 
@@ -57,6 +58,13 @@ describe MediaMetaHash do
       end
     end
 
+    context "for cnbc videos" do
+      it "returns object with correct attributes" do
+        info = MediaMetaHash.video_info CNBC_URL
+        info.methods.should include(:video_id, :embed_url, :title, :image, :description, :provider, :width, :height)
+      end
+    end
+
     context "for youtube videos" do
       before do
         VideoInfo.stub(:get).and_return{ basic_info({:thumbnail_medium => "url"}) }
@@ -69,7 +77,7 @@ describe MediaMetaHash do
       end
     end
 
-    context "for other videos (vimeo)" do
+    context "for other videos" do
       before do
         VideoInfo.stub(:get).and_return{ basic_info }
       end
@@ -78,6 +86,14 @@ describe MediaMetaHash do
         url = "http://vimeo.com/74868773"
         info = MediaMetaHash.video_info(url)
         info.methods.should_not include(:og_url)
+      end
+    end
+
+    context "for unsupported videos" do
+      it "returns nil" do
+        url = "http://video.com/2552524"
+        info = MediaMetaHash.video_info(url)
+        info.should be_nil
       end
     end
   end
@@ -116,7 +132,7 @@ describe MediaMetaHash do
       end
 
       it "the :og => :video key" do
-        @info_hash[:og][:video].should ==  "http://og_url.com"
+        @info_hash[:og][:video].should ==  ["http://og_url.com", {:height => "100", :width => "240"}]
       end
 
       it "the :twitter => :app key" do
@@ -143,7 +159,7 @@ describe MediaMetaHash do
       end
 
       it "the :og => :video key" do
-        @info_hash[:og][:video].should == "http://embed_link.com"
+        @info_hash[:og][:video].should == ["http://embed_link.com", {:height => "100", :width => "240"}]
       end
 
       it "the :twitter key" do

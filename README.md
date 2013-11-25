@@ -30,6 +30,10 @@ TODO: Write usage instructions here
 
 
 ## Change Log
+#### Version 0.0.4
+1. Fix error from 0.0.3
+#### Version 0.0.3 (yanked)
+1. Added Yahoo video support (partial)
 #### Version 0.0.2
 1. Returns given ```opts``` or ```{}``` if url is not supported
 2. Partial support for CNBC (no description, no title) 

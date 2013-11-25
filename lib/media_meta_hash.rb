@@ -36,6 +36,17 @@ module MediaMetaHash
         :width => 480,
         :height => (480 * 0.5625).to_i
       )
+    elsif url =~ /yahoo\.com\/video/
+      OpenStruct.new(
+        :video_id => "",
+        :embed_url => url,
+        :title => "",
+        :image => "",
+        :description => "",
+        :provider => "yahoo",
+        :width => 480,
+        :height => (480 * 0.5625).to_i
+      )
     else
       info = VideoInfo.get(url)
 

@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/daltonrenaldo/meta_media_hash"
   spec.license       = "MIT"
 
-  spec.add_dependency('video_info')
+  spec.add_dependency('video_info', '1.5.0')
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
